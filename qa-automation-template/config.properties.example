@@ -1,0 +1,30 @@
+# ==========================================================
+# QA Automation - Environment Configuration
+#
+# HOW TO USE:
+# 1. Copy this file and rename it to "config.properties"
+# 2. Fill in your actual values below
+# 3. config.properties is gitignored - never commit real credentials
+# ==========================================================
+
+# --- Application ---
+base.url=https://your-app-url.example.com/login
+
+# --- Browser ---
+# Supported: chrome, edge, firefox
+browser=chrome
+
+# --- Timeouts (in seconds) ---
+implicit.wait=5
+explicit.wait=15
+page.load.timeout=60
+
+# --- Credentials per role ---
+# Add one username/password pair per role your app has.
+# ConfigReader.getUsername(role) / getPassword(role) reads these by
+# prefix, e.g. getUsername("admin") reads "admin.username" below.
+admin.username=REPLACE_ME
+admin.password=REPLACE_ME
+
+# user.username=REPLACE_ME
+# user.password=REPLACE_ME

@@ -1,0 +1,22 @@
+# Real config with credentials - never commit this
+config.properties
+
+# Build output
+target/
+
+# Test artifacts
+test-output/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Uploaded test data files - keep the folder (via .gitkeep), not the files
+src/test/resources/upload/*
+!src/test/resources/upload/.gitkeep
+!src/test/resources/upload/README.md
