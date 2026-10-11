@@ -20,3 +20,8 @@ Thumbs.db
 src/test/resources/upload/*
 !src/test/resources/upload/.gitkeep
 !src/test/resources/upload/README.md
+
+# Maven logs & temp files
+*.log
+.mvn/
+maven-wrapper.jar
