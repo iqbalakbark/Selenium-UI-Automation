@@ -10,15 +10,17 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  * Owns the WebDriver lifecycle (create / fetch / quit).
- * <p>
+ *
  * Uses ThreadLocal so this safely supports parallel test execution later
  * without any changes needed here.
- * <p>
+ *
  * Browser is picked at runtime from config.properties ("browser=chrome/
  * edge/firefox") rather than hardcoded - swap browsers without touching
  * code. Selenium 4.6+'s built-in Selenium Manager auto-resolves the
@@ -50,10 +52,26 @@ public class DriverFactory {
         return switch (browser.toLowerCase()) {
             case "chrome" -> {
                 ChromeOptions options = new ChromeOptions();
-                // Useful on DEV/UAT environments with self-signed certs -
-                // remove if your environment doesn't need it.
                 options.setAcceptInsecureCerts(true);
-                // options.addArguments("--headless=new"); // uncomment for headless/CI runs
+
+                // 1. Matikan Password Manager via Preferences
+                Map<String, Object> prefs = new HashMap<>();
+                prefs.put("credentials_enable_service", false);
+                prefs.put("profile.password_manager_enabled", false);
+                prefs.put("profile.password_manager_leak_detection", false); // Matikan khusus deteksi breach
+                options.setExperimentalOption("prefs", prefs);
+
+                // 2. Argument Tambahan untuk Mematikan Feature & Bubble Prompt Chrome
+                options.addArguments("--disable-save-password-bubble");
+                options.addArguments("--disable-notifications");
+                options.addArguments("--disable-popup-blocking");
+
+                // Matikan fitur Password Leak Detection & Credential Provider di tingkat browser Engine
+                options.addArguments("--disable-features=PasswordManager,PasswordLeakDetection,PasswordCheck");
+
+                // Sembunyikan pesan "Chrome is being controlled by automated test software"
+                options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation", "enable-logging"});
+
                 yield new ChromeDriver(options);
             }
             case "edge" -> {
