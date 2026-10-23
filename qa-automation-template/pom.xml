@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!-- TODO: rename to your project -->
-    <groupId>com.yourcompany.qa</groupId>
-    <artifactId>qa-automation-template</artifactId>
+    <groupId>Automation-Swag</groupId>
+    <artifactId>qa-automation-UI</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 

@@ -19,10 +19,12 @@ public class LoginPage {
     private final WaitUtils waitUtils;
 
     // TODO: replace with your app's real locators
-    private final By usernameInput = By.name("username");
-    private final By passwordInput = By.name("password");
-    private final By loginButton = By.xpath("//button[normalize-space()='Log In']");
-    private final By loginErrorMessage = By.cssSelector(".login-error-message");
+    private final By usernameInput = By.cssSelector("[data-test='username']");
+    private final By passwordInput = By.cssSelector("[data-test='password']");
+    private final By loginButton = By.cssSelector("[data-test='login-button']");
+    private final By loginErrorMessage = By.xpath("//*[@id=\"login_button_container\"]/div/form/div[3]");
+    private final By burgerMenuBtn = By.id("react-burger-menu-btn");
+    private final By logOutBtn = By.id("logout_sidebar_link");
 
     public LoginPage(WebDriver driver, int timeoutInSeconds) {
         this.driver = driver;
@@ -47,6 +49,18 @@ public class LoginPage {
     }
 
     public String getLoginErrorMessage() {
-        return waitUtils.waitForVisible(loginErrorMessage).getText();
+       return waitUtils.waitForVisible(loginErrorMessage).getText();
+    }
+
+    public void clickBurgerMenu () {
+        waitUtils.waitForClickable(burgerMenuBtn).click();
+    }
+
+    public void clickLogoutBtn () {
+        waitUtils.waitForClickable(logOutBtn).click();
+    }
+
+    public String acceptAlertAndGetText() {
+        return waitUtils.acceptAlertAndGetText();
     }
 }
